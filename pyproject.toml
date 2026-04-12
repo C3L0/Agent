@@ -1,0 +1,13 @@
+[project]
+name = "agent"
+version = "0.1.0"
+description = "Simple LangChain Agent with OpenRouter and Ollama support"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain",
+    "langchain-openai",
+    "langchain-ollama",
+    "langgraph",
+    "python-dotenv",
+]

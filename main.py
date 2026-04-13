@@ -1,9 +1,14 @@
 import argparse
+import os
+
+from dotenv import load_dotenv
 
 from src.agent import MultiProviderAgent
 
 
 def main():
+    load_dotenv()
+
     # 1. Setup Argument Parser
     parser = argparse.ArgumentParser(
         description="Run the Agentic AI with OpenRouter or Ollama."
@@ -27,11 +32,13 @@ def main():
 
     # 4. Set Provider and Default Model
     if args.openrouter:
+        default_model = os.getenv("OPENROUTER_MODEL")
         provider = "openrouter"
-        model = args.model or "google/gemma-4-31b-it:free"
+        model = args.model or default_model
     else:  # args.ollama
+        default_model = os.getenv("OLLAMA_MODEL")
         provider = "ollama"
-        model = args.model or "llama3.2"
+        model = args.model or default_model
 
     print(f"--- Starting Agent (Provider: {provider}, Model: {model}) ---")
 
@@ -51,7 +58,7 @@ def main():
         print(f"An error occurred: {e}")
         if provider == "ollama":
             print(
-                "\nMake sure Ollama is running (`ollama serve`) and the model is pulled (`ollama pull llama3.2`)!"
+                "\nMake sure Ollama is running (`ollama serve`) and the model is pulled (`ollama pull <your-model>`)!"
             )
 
 

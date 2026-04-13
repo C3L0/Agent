@@ -46,7 +46,7 @@ def main():
     try:
         agent = MultiProviderAgent(provider=provider, model=model)
 
-        query = "What's the weather like in Paris?"
+        query = "Find a recent article about Multi-Agent Systems, summarize it, and then SAVE it to my knowledge base with appropriate tags."
         print(f"User: {query}")
 
         response = agent.ask(query)

@@ -10,4 +10,7 @@ dependencies = [
     "langchain-ollama",
     "langgraph",
     "python-dotenv",
+    "langchain-community>=0.4.1",
+    "ddgs>=9.13.0",
+    "trafilatura>=2.0.0",
 ]

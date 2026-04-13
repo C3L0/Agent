@@ -40,3 +40,6 @@ env/
 
 # OS specific
 .DS_Store
+
+*.json
+

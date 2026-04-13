@@ -1,0 +1,14 @@
+[
+    {
+        "date": "2026-04-14 00:26:03",
+        "title": "Multi-Agent Systems Explained: Architecture, Benefits, and Applications",
+        "url": "https://www.truefoundry.com/blog/multi-agent-systems-mas",
+        "summary": "Multi-Agent Systems (MAS) are a collection of autonomous AI agents that collaborate to solve complex problems. Each agent has its own goals and knowledge, coordinating their actions to achieve shared objectives. Key capabilities include autonomy, local perception, decentralization, communication, and learning, making MAS powerful for dynamic problem-solving. Modern MAS often leverage Large Language Models (LLMs) to enable agentic AI systems.",
+        "tags": [
+            "Multi-Agent Systems",
+            "AI",
+            "LLMs",
+            "Agentic AI"
+        ]
+    }
+]

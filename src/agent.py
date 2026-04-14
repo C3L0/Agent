@@ -1,10 +1,7 @@
 from typing import Literal
 
 from src.core.providers import get_llm
-from src.tools.scrape import scrape_website
-from src.tools.search import search_web
-from src.tools.storage import save_to_knowledge_base
-from src.workflows.react import get_react_agent
+from src.workflows.hybrid_flow import get_hybrid_workflow
 
 
 class MultiProviderAgent:
@@ -17,15 +14,26 @@ class MultiProviderAgent:
         # 1. Initialize the LLM based on the provider
         self.llm = get_llm(provider, model, temperature)
 
-        # 2. Define tools
-        self.tools = [search_web, scrape_website, save_to_knowledge_base]
-
-        # 3. Setup the Agent Workflow
-        self.agent_executor = get_react_agent(self.llm, self.tools)
+        # 2. Setup the Multi-Agent Hybrid Workflow
+        # This workflow handles routing, research, and writing
+        self.agent_executor = get_hybrid_workflow(self.llm)
 
     def ask(self, query: str) -> str:
-        """Main entry point to interact with the agent."""
-        # LangGraph agents return a stream of states. We just want the last one.
+        """Main entry point to interact with the multi-agent system."""
+        # The hybrid workflow returns the final state after all nodes have executed.
         result = self.agent_executor.invoke({"messages": [("user", query)]})
-        # The last message in the state is the agent's response
-        return result["messages"][-1].content
+        
+        # Robust way to get the last message content
+        last_message = result["messages"][-1]
+        
+        # Handle both AIMessage objects and dict/tuple formats
+        if hasattr(last_message, "content"):
+            return last_message.content
+        elif isinstance(last_message, dict):
+            return last_message.get("content", str(last_message))
+        elif isinstance(last_message, tuple):
+            return last_message[1]
+        
+        return str(last_message)
+
+

@@ -13,4 +13,5 @@ dependencies = [
     "langchain-community>=0.4.1",
     "ddgs>=9.13.0",
     "trafilatura>=2.0.0",
+    "pytest>=9.0.3",
 ]

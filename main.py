@@ -28,9 +28,14 @@ def main():
         "--model", type=str, help="Specify the model to use (overrides defaults)"
     )
 
+    # 4. Add Query Argument
+    parser.add_argument(
+        "query", type=str, nargs='?', help="The question or task for the agent (optional, will prompt if missing)"
+    )
+
     args = parser.parse_args()
 
-    # 4. Set Provider and Default Model
+    # 5. Set Provider and Default Model
     if args.openrouter:
         default_model = os.getenv("OPENROUTER_MODEL")
         provider = "openrouter"
@@ -42,15 +47,19 @@ def main():
 
     print(f"--- Starting Agent (Provider: {provider}, Model: {model}) ---")
 
-    # 5. Initialize and Run the Agent
+    # 6. Get Query
+    query = args.query
+    if not query:
+        query = input("\nWhat is your question? ")
+
+    # 7. Initialize and Run the Agent
     try:
         agent = MultiProviderAgent(provider=provider, model=model)
 
-        query = "Find a recent article about Multi-Agent Systems, summarize it, and then SAVE it to my knowledge base with appropriate tags."
-        print(f"User: {query}")
+        print(f"\nUser: {query}")
 
         response = agent.ask(query)
-        print(f"\nFinal Answer: {response}")
+        print(f"\nFinal Answer:\n{response}")
 
     except ValueError as e:
         print(f"Configuration Error: {e}")

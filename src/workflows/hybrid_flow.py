@@ -4,6 +4,8 @@ from langgraph.graph import StateGraph, START, END
 from src.state import AgentState
 from src.agents.researcher import get_researcher_agent
 from src.agents.writer import get_writer_node
+from src.agents.educator import get_educator_node
+from src.agents.visualizer import get_visualizer_node
 
 def router(state: AgentState) -> Literal["researcher", "writer"]:
     """
@@ -21,13 +23,17 @@ def router(state: AgentState) -> Literal["researcher", "writer"]:
 def get_hybrid_workflow(llm):
     # 1. Initialize our specialized components
     researcher_agent = get_researcher_agent(llm)
+    educator_node = get_educator_node(llm)
+    visualizer_node = get_visualizer_node(llm)
     writer_node = get_writer_node(llm)
     
     # 2. Define the Graph
     workflow = StateGraph(AgentState)
     
-    # 3. Add our Nodes (LangGraph handles sub-graphs as nodes directly)
+    # 3. Add our Nodes
     workflow.add_node("researcher", researcher_agent)
+    workflow.add_node("educator", educator_node)
+    workflow.add_node("visualizer", visualizer_node)
     workflow.add_node("writer", writer_node)
     
     # 4. Build the Flow
@@ -40,7 +46,9 @@ def get_hybrid_workflow(llm):
         }
     )
     
-    workflow.add_edge("researcher", "writer")
+    workflow.add_edge("researcher", "educator")
+    workflow.add_edge("educator", "visualizer")
+    workflow.add_edge("visualizer", "writer")
     workflow.add_edge("writer", END)
     
     return workflow.compile()

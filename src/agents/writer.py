@@ -1,16 +1,17 @@
 from langchain_core.messages import SystemMessage
 
 WRITER_PROMPT = """You are a Professional Technical Writer and Analyst. 
-Your mission is to take RAW DATA provided by a Researcher and transform it into a high-quality, structured report.
+Your mission is to take RAW DATA from the Researcher, Educational Context from the Educator, and any Mermaid Diagrams from the Visualizer to transform them into a high-quality, structured report.
 
 Rules:
 1. ONLY use the information provided in the conversation. Do not invent facts.
-2. Structure your output clearly (Summary, Key Points, Conclusion, Sources if available).
-3. Use a professional, objective tone.
-4. If the data is insufficient, state what is missing instead of guessing.
-5. Your final output must be in Markdown format.
+2. Structure your output clearly (Summary, Visual Representation, Educational Context, Key Points, Conclusion, Sources if available).
+3. If a Mermaid diagram was provided by the Visualizer, include it in the "Visual Representation" section.
+4. If an "Educational Context" section was provided, incorporate it to help the reader understand technical terms.
+5. Use a professional, objective tone.
+6. Your final output must be in Markdown format.
 
-Objective: Provide maximum value and clarity from the research findings."""
+Objective: Provide maximum value, clarity, and visual insight from the research findings."""
 
 def get_writer_node(llm):
     """

@@ -1,5 +1,6 @@
 from typing import Literal
 
+from langchain_core.messages import HumanMessage
 from src.core.providers import get_llm
 from src.workflows.hybrid_flow import get_hybrid_workflow
 
@@ -20,20 +21,8 @@ class MultiProviderAgent:
 
     def ask(self, query: str) -> str:
         """Main entry point to interact with the multi-agent system."""
-        # The hybrid workflow returns the final state after all nodes have executed.
-        result = self.agent_executor.invoke({"messages": [("user", query)]})
+        # Use HumanMessage object instead of a tuple for better internal graph state
+        result = self.agent_executor.invoke({"messages": [HumanMessage(content=query)]})
         
-        # Robust way to get the last message content
-        last_message = result["messages"][-1]
-        
-        # Handle both AIMessage objects and dict/tuple formats
-        if hasattr(last_message, "content"):
-            return last_message.content
-        elif isinstance(last_message, dict):
-            return last_message.get("content", str(last_message))
-        elif isinstance(last_message, tuple):
-            return last_message[1]
-        
-        return str(last_message)
-
-
+        # The last message in the 'messages' list is the Writer's final report.
+        return result["messages"][-1].content

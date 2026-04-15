@@ -10,5 +10,30 @@
             "LLMs",
             "Agentic AI"
         ]
+    },
+    {
+        "date": "2026-04-15 11:15:28",
+        "title": "Multi-agent AI is the new microservices",
+        "url": "https://www.infoworld.com/article/4154335/multi-agent-ai-is-the-new-microservices.html",
+        "summary": "Multi-agent systems can be powerful but introduce significant complexity. The article argues that the current trend of adopting multi-agent systems might be premature, as the complexity of managing agent hand-offs, arbitration, and state synchronization can negate the benefits. It draws parallels to the microservices architecture, suggesting that complexity relocates from the system architecture to agent interactions, prompts, and state management. The author advises that for many applications, optimizing a single LLM call with retrieval and in-context examples is sufficient, and that developers should focus on improving retrieval and prompt structure before adding more agents. Distributed intelligence is still distributed systems, and these systems are not cheap to build and maintain.",
+        "tags": [
+            "Multi-Agent Systems",
+            "LLM Agents",
+            "AI Architecture",
+            "Software Engineering"
+        ]
+    },
+    {
+        "date": "2026-04-15 11:50:28",
+        "title": "Anthropic Multi-Agent Research System Design",
+        "url": "https://simonwillison.net/2025/Jun/14/multi-agent-research-system/",
+        "summary": "A multi-agent system consists of multiple LLM agents that autonomously use tools in a loop to solve complex problems. This architecture excels at breadth-first queries requiring parallel exploration. The system works by having a lead agent decompose queries into subtasks, which are then executed by parallel subagents. Key to success is prompt engineering and specialized agents (like a tool-testing agent) to optimize tool usage. While highly effective for complex tasks, these systems consume significantly more tokens (up to 15x more than chat interactions). Memory mechanisms are used to persist plans and context across the multi-agent workflow.",
+        "tags": [
+            "Multi-Agent Systems",
+            "LLM Agents",
+            "AI Research",
+            "Agentic AI",
+            "Tool Use"
+        ]
     }
 ]
